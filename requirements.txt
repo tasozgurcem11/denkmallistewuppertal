@@ -1,0 +1,4 @@
+Django==3.0.6
+PyMySQL==0.9.3
+requests==2.22.0
+bs4==0.0.1

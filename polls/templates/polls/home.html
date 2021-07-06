@@ -1,0 +1,392 @@
+{% extends 'polls/header.html' %}
+
+{% block content %}
+{% load static %}
+
+
+
+{{% block style_page %}{% include 'polls/style-page.html' %}{% endblock %}
+
+
+
+
+<body id="home" class="scrollspy" style="background-color: #00A650;">
+
+
+  
+
+
+
+
+<section style="background-color: black; " class="hide-on-med-and-down">
+  <div class="row white" style="height: 450px; margin-top: 0%; margin-bottom: 0%;">
+    <div class="col s4" style="float: left; width: 61.80%; height: 100%; background-color: #00A650;">
+      <div class="container" style="width: 500px; margin-top: 6.5%;">
+        <div class="caption left-align" style="padding-top: 0%;">
+          <h3 style="font-family: 'Poppins', sans-serif; font-weight: 300; color: white;" class="hide-on-small-only">Suchen und finden Sie Baudenkmäler in Wuppertal</h3>
+          <h5 style="font-family: 'Poppins', sans-serif; font-weight: 200; color: white;" class="hide-on-small-only">Auskunft über denkmalgeschützte Immobilien in Wuppertal</h5>
+          <div class="row">
+            <form id="form1" action="/form#result"  method="POST" >{% csrf_token %}
+            <div class="form-group">
+                <div class="input-field col s12">
+                  <input style="color: white;" type="text"  id="searchTextField" placeholder="Straßenadresse eingeben, z.B: Alemannenstraße 35" name="address"/>
+                  <input type="hidden" id="loc_lat" />
+                  <input type="hidden" id="loc_long" />
+                </div>
+            </div>
+          </div>
+          <button type="submit" form="form1" href="#result" value="Submit" onclick="myFunction1()"  id="change2" class="waves-effect pulse waves-light  black-text btn hoverable" style="background-color: white;text-align: center;font-family: 'Poppins', sans-serif; margin-top: -32px;">Suchen</button> 
+          <div style="width: 1200px;">
+            
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div class="col s8" style="float: left; width: 38.20%; height: 100%; background-image: url('{% static "wuppertal2.jpg" %}'); background-size: cover;">
+    </div>
+  </div>
+</section>
+
+<section style="background-color: red;" class="hide-on-med-and-down" >
+  <div class="row red" style="height: 400px; margin-top: 0%; margin-bottom: 0%;">
+    <div class="col s4" style="float: right; width: 100%; height: 100%; background-color: white;">
+      <div class="container" style="width: 1000px; text-align: center; margin-top: 0%;">
+        <div id="demo">
+          <h1 style="font-family: 'Poppins', sans-serif;">Suchergebnis zu Ihrer Denkmalsuche</h1>
+          <!-- Responsive table starts here -->
+          <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
+          <div class="table-responsive-vertical shadow-z-1">
+          <!-- Table starts here -->
+          <table id="table" class="table table-hover table-mc-light-blue">
+              <thead>
+                <tr>
+                  <th>Lage</th>
+                  <th>Bezeichnung</th>
+                  <th>Bauzeit</th>
+                  <th>Denkmal Nr.</th>
+                  <th>Eingetragen Seit</th>
+                </tr>
+              </thead>
+              {% if lage != "kein Ergebnis" %}
+                <tbody>
+                  <tr>
+                    <td data-title="Lage">{{lage}}</td>
+                    <td data-title="Bezeichnung">{{bezeichnung}}</td>
+                    <td data-title="Bauzeit">{{bauzeit}}</td>
+                    <td data-title="Denkmal Nr.">{{nummer}}</td>
+                    <td data-title="Eingetragenseit">{{eingetragenseit}}</td>
+                  </tr>
+                </tbody>
+              {% endif %}
+          </table>
+          
+            
+
+          </div>
+          {% if lage == "kein Ergebnis" %}
+            <h4 style="font-family: 'Poppins', sans-serif; padding-top: 40px;color: red;">Kein Denkmalschutz!
+            </h4>
+          {% endif %}
+          <img id="gif" src='{% static "loader2.gif" %}' style="width: 100px; visibility: hidden;" >
+
+          
+
+          
+          <!-- Table Constructor change table classes, you don't need it in your project -->
+          
+        </div>
+        
+      </div>
+    </div>
+
+    
+  </div>
+</section>
+
+
+<!-- 
+
+        MOBILE SECTION STARTS HERE!!!
+
+-->
+
+<section style="background-color: black; " class="hide-on-med-and-up">
+  <div class="row white" style="height: 75%; margin-top: 0%; margin-bottom: 0%; background-image: url('{% static "wuppertal3.jpg" %}'); background-size: cover;" >
+    <div class="col s4" style="float: left; width: 40%; height: 100%;">
+      <div class="container" style="width: 250px; text-align: center; margin-top: 6.5%;  ">
+        
+        <div class="caption left-align" style="padding-top: 4%;">
+          <h3 style="font-family: 'Poppins', sans-serif; font-weight: 400; color: white;">Suchen und finden Sie Baudenkmäler in Wuppertal</h3>
+          <div class="row">
+            <form id="form" action="/form"  method="POST" >{% csrf_token %}
+            <div class="form-group">
+                <div class="input-field col s12" style="background-color: white; border-radius: 2%; margin-left: 10px;">
+                  <input style="color: black;" type="text"  placeholder="Straßenadresse eingeben" name="address2"/>
+                  <input type="hidden" id="loc_lat" />
+                  <input type="hidden" id="loc_long" />
+                </div>
+            </div>
+          </div>
+          <button type="submit"  value="Submit" href="/form#res" class="waves-effect waves-light pulse black-text btn hoverable" style="background-color: white;text-align: center;font-family: 'Poppins', sans-serif; margin-top: -20px;">Suchen</button> 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section style="background-color: red;" class="hide-on-med-and-up" id="result">
+  <div class="row red" style="height: 75%; margin-top: 0%; margin-bottom: 0%;">
+    <div class="col s4" style="float: right; width: 100%; height: 100%; background-color: white;">
+      <div class="container" style="text-align: center; margin-top: 0%;" >
+          <h4 style="font-family: 'Poppins', sans-serif;font-weight: 300; color: black;" >Suchergebnis zu Ihrer Denkmalsuche</h4>
+          <!-- Responsive table starts here -->
+          <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
+          <!-- Table starts here -->
+         <div class="caption left-align">
+              <!-- <p style="font-family: 'Poppins', sans-serif;font-weight: 300; color: #000; font-size: 20px;">Lage: {{lage}}</p>
+              <h3 style="font-family: 'Poppins', sans-serif;">Bezeichnung: {{bezeichnung}}</h3>
+              <h3 style="font-family: 'Poppins', sans-serif;">Bauzeit: {{bauzeit}}</h3>
+              <h3 style="font-family: 'Poppins', sans-serif;">Denkmal Nr.: {{nummer}}</h3>
+              <h3 style="font-family: 'Poppins', sans-serif;">Eingetragenseit: {{eingetragenseit}}</h3> -->
+          
+              {% if lage != "kein Ergebnis" %}
+              <p style="font-family: 'Poppins', sans-serif;font-weight: 300; color: #000; font-size: 20px;">Lage: {{lage}}</p>
+              <p style="font-family: 'Poppins', sans-serif;font-weight: 300; color: #000; font-size: 20px;">Bezeichnung: {{bezeichnung}}</p>
+              <p style="font-family: 'Poppins', sans-serif;font-weight: 300; color: #000; font-size: 20px;">Bauzeit: {{bauzeit}}</p>
+              <p style="font-family: 'Poppins', sans-serif;font-weight: 300; color: #000; font-size: 20px;">Denkmal Nr.: {{nummer}}</p>
+              <p style="font-family: 'Poppins', sans-serif;font-weight: 300; color: #000; font-size: 20px;">Eingetragenseit: {{eingetragenseit}}</p>
+          
+          </div> 
+              {% endif %}
+          {% if lage == "kein Ergebnis" %}
+            <h5 style="font-family: 'Poppins', sans-serif; margin-top: 120px;color: red;text-align: center;">Kein Denkmalschutz!
+            </h5>
+          {% endif %}
+          <img id="gif" src='{% static "loader2.gif" %}' style="width: 100px; visibility: hidden;" >
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hide-on-med-and-down">
+  <div class="parallax-container" style="height: 210px" >
+    <div class="parallax">
+      <div class="row" style="height: 15%; margin-top: 0%; margin-bottom: 0%; z-index: 11;">
+        <div class="col s4" style="float: left; width: 100%; height: 100%;">
+          <div class="container" style="text-align: center; margin-top: 0%;  ">
+            <div class="caption center-align" style="padding-top: 5%;">
+              <h3  style="color: white; font-family:'Poppins', sans-serif; font-weight: 300;">Grün, industriell, innovativ: <strong>Wuppertal</strong>.</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hide-on-med-and-down" style="background-color: white; ">
+  <div class="row white" style="height: 550px; margin-top: 0%; margin-bottom: 0%;">
+    <div class="col s4" style="float: left; width: 61.80%; height: 100%; background-color: white;">
+      <div class="container" style="max-width: 600px; text-align: center; margin-top: 6.5%;  ">
+        <div class="caption left-align">
+          <h3  class="hide-on-med-and-down" style="color: #00A650; font-family:'Poppins', sans-serif; font-weight: 300;">Daten und Fakten</h3>
+          <h4 class="hide-on-large-only" style="color: black; font-family:'Poppins', sans-serif; font-weight: 300;">Daten und Fakten</h4>
+          <p class="hide-on-med-and-down" style="font-family: 'Poppins', sans-serif; font-weight: 200; color: black;font-size: 20px;">Die Stadt Wuppertal liegt östlich der nordrhein-westfälischen Landeshauptstadt Düsseldorf
+            und südlich des Ruhrgebietes. Mit 362.000 Einwohnern auf einer Fläche von 168,41 km² ist
+            Wuppertal das Oberzentrum des Bergischen Landes. Die Universitätsstadt ist Teil sowohl der
+            Metropolregion Rhein-Ruhr als auch der Metropolregion Rheinland. Der namensgebende
+            Fluss, die Wupper, durchquert das Stadtgebiet von Ost nach West auf einer Länge von 33,9
+            Kilometern.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s8" style="float: left; width: 38.20%; height: 100%; background-image: url('{% static "wup-image.jpg" %}'); background-size: cover;">
+    </div>
+  </div>
+</section>
+
+<section class="hide-on-large-only">
+  <img src='{% static "wup-image.jpg" %}' style="width: 100%; height: 40%;object-fit: cover; ">
+</section>
+
+<section class="hide-on-large-only" style="background-color: white; height: 90%;">
+<div class="row white" style="height: 100%;">
+  <div class="col s4" style="float: left; width: 100%; height: 100%;z-index:999;">
+    <div class="container" style="max-width: 800px; text-align: center; margin-top: 6.5%;  ">
+      <div class="caption left-align">
+        <h4 style="color: #00A650; font-family:'Poppins', sans-serif; font-weight: 300;">Daten und Fakten</h4>
+        <p style="font-family: 'Poppins', sans-serif; font-weight: 200; color: black;font-size: 18px; " class="black-text text-lighten-3">Die Stadt Wuppertal liegt östlich der nordrhein-westfälischen Landeshauptstadt Düsseldorf
+          und südlich des Ruhrgebietes. Mit 362.000 Einwohnern auf einer Fläche von 168,41 km² ist
+          Wuppertal das Oberzentrum des Bergischen Landes. Die Universitätsstadt ist Teil sowohl der
+          Metropolregion Rhein-Ruhr als auch der Metropolregion Rheinland. Der namensgebende
+          Fluss, die Wupper, durchquert das Stadtgebiet von Ost nach West auf einer Länge von 33,9
+          Kilometern.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+
+<section class="hide-on-med-and-down" >
+  <div class="parallax-container" style="height: 210px;" >
+    <div class="parallax"><img style="z-index: -1;filter: brightness(25%);" src="{% static 'schwebahn.jpg' %}">
+      <div class="row" style="height: 25%; margin-top: 0%; margin-bottom: 0%; z-index: 11;">
+        <div class="col s4" style="float: left; width: 100%; height: 100%;">
+          <div class="container" style="text-align: center; margin-top: 0%;  ">
+            <div class="caption center-align" style="padding-top: 5%;">
+              <h3  style="color: white; font-family:'Poppins', sans-serif; font-weight: 300;">"Stadt Schwebebahn"</h3>
+                <br></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section style="background-color: white;" class="hide-on-med-and-down" >
+  <div class="row" style="height: 600px; margin-top: 0%; margin-bottom: 0%;">
+    <div class="col s4" style="float: right; width: 61.80%; height: 100%; background-color: white;">
+      <div class="container" style="width: 700px; text-align: center; margin-top: 6.5%;  ">
+        <div class="caption left-align" style="padding-top: 1%; padding-left: 8%;">
+          <h3  class="hide-on-med-and-down" style="color: #00A650; font-family:'Poppins', sans-serif; font-weight: 300;">Schwebend durch Kultur und Geschichte</h3>
+          <p class="hide-on-med-and-down" style="font-family: 'Poppins', sans-serif; font-weight: 200; color: black;font-size: 20px;">Einzigartig in Wuppertal ist die im Jahre 1901 eröffnete Schwebebahn, die bis heute jährlich
+            Millionen von Fahrgästen durch das Tal schwebend befördert. Dieses innovative
+            Nahverkehrssystem ist das Wahrzeichen Wuppertals.
+            Das international renommierte Tanztheater Pina Bausch, das Wuppertal Institut für Klima,
+            Umwelt, Energie, das Sinfonieorchester Wuppertal sowie das Von der-Heydt-Museum und
+            das Geburtshaus von Friedrich Engels sind einige Einrichtungen, die die Bedeutung und die
+            Bekanntheit dieser Stadt nach wie vor weiter bestehen lassen.</p>        </div>
+      </div>
+    </div>
+    <div class="col s8" style="float: left; width: 38.20%; height: 100%; background-image: url('{% static "wupicon.jpg" %}'); background-size: cover;">
+    </div>
+  </div>
+</section>
+
+<section class="hide-on-large-only">
+  <img src='{% static "wupicon.jpg" %}' style="width: 100%; height: 40%;object-fit: cover; ">
+</section>
+
+<section class="hide-on-large-only" style="background-color: white; height: 120%;">
+<div class="row white" style="height: 100%;">
+  <div class="col s4" style="float: left; width: 100%; height: 100%;z-index:999;">
+    <div class="container" style="max-width: 800px; text-align: center; margin-top: 6.5%;  ">
+      <div class="caption left-align">
+        <h4 style="color: #00A650; font-family:'Poppins', sans-serif; font-weight: 300;">Schwebend durch Kultur und Geschichte</h4>
+        <p style="font-family: 'Poppins', sans-serif; font-weight: 200; color: black;font-size: 18px; " class="black-text text-lighten-3">Einzigartig in Wuppertal ist die im Jahre 1901 eröffnete Schwebebahn, die bis heute jährlich
+          Millionen von Fahrgästen durch das Tal schwebend befördert. Dieses innovative
+          Nahverkehrssystem ist das Wahrzeichen Wuppertals.
+          Das international renommierte Tanztheater Pina Bausch, das Wuppertal Institut für Klima,
+          Umwelt, Energie, das Sinfonieorchester Wuppertal sowie das Von der-Heydt-Museum und
+          das Geburtshaus von Friedrich Engels sind einige Einrichtungen, die die Bedeutung und die
+          Bekanntheit dieser Stadt nach wie vor weiter bestehen lassen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="hide-on-med-and-down" >
+  <div class="parallax-container" style="height: 210px;" >
+    <div class="parallax"><img style="z-index: -1;filter: brightness(25%);" src="{% static 'golden-ratio2.jpg' %}">
+      <div class="row" style="height: 25%; margin-top: 0%; margin-bottom: 0%; z-index: 11;">
+        <div class="col s4" style="float: left; width: 100%; height: 100%;">
+          <div class="container" style="text-align: center; margin-top: 0%;  ">
+            <div class="caption center-align" style="padding-top: 5%;">
+              <h3  style="color: white; font-family:'Poppins', sans-serif; font-weight: 300;">"Stadt Denkmal"</h3>
+                <br></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hide-on-med-and-down" style="background-color: white; ">
+  <div class="row white" style="height: 550px; margin-top: 0%; margin-bottom: 0%;">
+    <div class="col s4" style="float: left; width: 61.80%; height: 100%; background-color: white;">
+      <div class="container" style="max-width: 600px; text-align: center; margin-top: 6.5%;  ">
+        <div class="caption left-align">
+          <h3  class="hide-on-med-and-down" style="color: #00A650; font-family:'Poppins', sans-serif; font-weight: 300;">Baudenkmale im Grünen</h3>
+          <h4 class="hide-on-large-only" style="color: black; font-family:'Poppins', sans-serif; font-weight: 300;">Baudenkmale im Grünen</h4>
+          <p class="hide-on-med-and-down" style="font-family: 'Poppins', sans-serif; font-weight: 200; color: black;font-size: 20px;">Große Villenviertel und Wohnhäuser aus der Gründerzeit bezeugen eine Zeit in der
+            Wuppertal maßgeblich zur deutschen und europäischen Frühindustrialisierung beitrug.
+            Besonders die Textilindustrie bescherte der Region Reichtum und Wachstum.
+            Weder ist es Zufall, dass das Briller Viertel bei seiner Entstehung zu den größten
+            zusammenhängenden Villenvierteln Europas zählte noch, dass sich derzeit etwa 4500
+            Baudenkmale im Wuppertaler Stadtgebiet befinden.
+            Als Zeitzeugen einer wichtigen industriellen und wirtschaftlichen Epoche zieren diese
+            Baudenkmale das Stadtbild Wuppertals – gestern wie heute.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s8" style="float: left; width: 38.20%; height: 100%; background-image: url('{% static "wup44.jpg" %}'); background-size: cover;">
+    </div>
+  </div>
+</section>
+
+
+<section class="hide-on-large-only">
+  <img src='{% static "wup44.jpg" %}' style="width: 100%; height: 40%;object-fit: cover; ">
+</section>
+
+<section class="hide-on-large-only" style="background-color: white; height: 115%;">
+<div class="row white" style="height: 100%;">
+  <div class="col s4" style="float: left; width: 100%; height: 100%;z-index:999;">
+    <div class="container" style="max-width: 800px; text-align: center; margin-top: 6.5%;  ">
+      <div class="caption left-align">
+        <h4 style="color: #00A650; font-family:'Poppins', sans-serif; font-weight: 300;">Baudenkmale im Grünen</h4>
+        <p style="font-family: 'Poppins', sans-serif; font-weight: 200; color: black;font-size: 18px; " class="black-text text-lighten-3">Große Villenviertel und Wohnhäuser aus der Gründerzeit bezeugen eine Zeit in der
+          Wuppertal maßgeblich zur deutschen und europäischen Frühindustrialisierung beitrug.
+          Besonders die Textilindustrie bescherte der Region Reichtum und Wachstum.
+          Weder ist es Zufall, dass das Briller Viertel bei seiner Entstehung zu den größten
+          zusammenhängenden Villenvierteln Europas zählte noch, dass sich derzeit etwa 4500
+          Baudenkmale im Wuppertaler Stadtgebiet befinden.
+          Als Zeitzeugen einer wichtigen industriellen und wirtschaftlichen Epoche zieren diese
+          Baudenkmale das Stadtbild Wuppertals – gestern wie heute.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+
+
+
+
+
+  
+  
+
+
+  
+  <!--JavaScript at end of body for optimized loading-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script>
+    function myFunction1() {
+      document.getElementById("gif").style.visibility = "visible";
+    }
+  </script>
+
+
+
+</body>
+
+{% endblock %}

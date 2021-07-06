@@ -1,0 +1,74 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% block branding %}
+{% block extrastyle %}
+  <link rel='stylesheet' href='{% static 'css/admin.css' %}'>
+{% endblock %}
+<h1 = 'head' style="color: white;">
+    Denkmal Liste Admin</h1>
+
+
+<style>
+    #header{
+  height: 50px;
+  background: black;
+  color: white;
+}
+#header a:link, #header a:visited {
+    color: #91ff6b;
+}
+#branding h1{
+  color: #000;
+}
+
+h1{
+  color: #000;
+}
+.module h2, .module caption, .inline-group h2{
+  background: rgb(228, 228, 228);
+  color: black;
+  height: 18px;
+}
+a.section:link{
+  color: black;
+}
+a:link{
+  color: #0e203d;
+}
+
+div.breadcrumbs {
+  background: #dee1e6;
+  color:#0e203d;
+}
+div.breadcrumbs a {
+  color: #0e203d;
+}
+
+div.breadcrumbs a:hover {
+  color: black;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+  background: black;
+  color: #fff;
+  border-radius: 14px;
+}
+.button:hover, input[type=submit]:hover, input[type=button]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover{
+  background: #91ff6b;
+  color: black;
+}
+.button.default, input[type=submit].default, .submit-row input.default{
+  background: black;
+  color: white;
+}
+.button.default:hover, input[type=submit].default:hover, .submit-row input.default:hover{
+  background: #91ff6b;
+  color: black;
+}
+body.login {background-color: black;}
+
+</style>
+
+
+
+{% endblock %}
